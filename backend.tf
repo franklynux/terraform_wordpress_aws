@@ -2,7 +2,7 @@
 # The backend is used to store the state file in a remote location.
 # This is useful when working in a team environment where multiple people are working on the same infrastructure.
 # The backend configuration is stored in a separate file so that it can be easily shared with other team members.
-
+/*
 terraform {
   backend "s3" {
     bucket = "wordpress-terraform-statefile"  # The name of the S3 bucket to store the state file
@@ -13,3 +13,4 @@ terraform {
     dynamodb_table = "wordpress-dynamodb"     # The DynamoDB table used for state locking to prevent concurrent operations
   }
 }
+*/

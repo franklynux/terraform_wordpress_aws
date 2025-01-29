@@ -1,11 +1,11 @@
 # Create Security Group for Application Load Balancer
 resource "aws_security_group" "wp-lb-sg" {
-    name        = "ALB-SG"  # Name of the security group for the ALB
+    name        = "DigitalBoost-WordPress-ALB"  # Updated to reflect the firm's name
     vpc_id      = var.vpc_id  # Associate the security group with the specified VPC
     description = "Security Group for ALB"  # Description of the security group
 
     tags = {
-      Name = "Wordpress-ALB"  # Tag for identifying the ALB security group
+      Name = "DigitalBoost-WordPress-ALB"  # Updated to reflect the firm's name
     }
 }
 
@@ -42,12 +42,12 @@ resource "aws_security_group_rule" "allow_all_ALB_egress" {
 
 # Create Security Group for SSH Access
 resource "aws_security_group" "ssh-sg" {
-    name        = "ssh-SG"  # Name of the security group for SSH access
+    name        = "DigitalBoost-WordPress-SSH"  # Updated to reflect the firm's name
     vpc_id = var.vpc_id  # Associate the security group with the specified VPC
     description = "Security Group for SSH"  # Description of the security group
 
     tags = {
-      Name = "Wordpress-SSH"  # Tag for identifying the SSH security group
+      Name = "DigitalBoost-WordPress-SSH"  # Updated to reflect the firm's name
     }
 }
 
@@ -73,12 +73,12 @@ resource "aws_security_group_rule" "allow_all_bastion_egress" {
 
 # Create Security Group for WordPress Server
 resource "aws_security_group" "wp-vpc-sg" {
-    name        = "wordpress-SG"  # Name of the security group for the WordPress server
+    name        = "DigitalBoost-WordPress-Main-SG"  # Updated to reflect the firm's name
     vpc_id = var.vpc_id  # Associate the security group with the specified VPC
     description = "Security Group for WordPress EC2 instance"  # Description of the security group
 
     tags = {
-      Name = "Wordpress-main-SG"  # Tag for identifying the WordPress server security group
+      Name = "DigitalBoost-WordPress-Main-SG"  # Updated to reflect the firm's name
     }
 }
 
@@ -115,12 +115,12 @@ resource "aws_security_group_rule" "allow_all_wordpress_egress" {
 
 # Create Security group for RDS MySQL server
 resource "aws_security_group" "wp-rds-sg" {
-    name        = "RDS-SG"  # Name of the security group for RDS
+    name        = "DigitalBoost-WordPress-RDS"  # Updated to reflect the firm's name
     vpc_id = var.vpc_id  # Associate the security group with the specified VPC
     description = "Security Group for RDS MySQL & EFS"  # Description of the security group
 
     tags = {
-      Name = "wordpress-RDS"  # Tag for identifying the RDS security group
+      Name = "DigitalBoost-WordPress-RDS"  # Updated to reflect the firm's name
     }
 }
 
@@ -137,12 +137,12 @@ resource "aws_security_group_rule" "wp-to-rds" {
 
 # Create Security group for Elastic File System (EFS)
 resource "aws_security_group" "wp-efs-sg" {
-    name        = "EFS-SG"  # Name of the security group for EFS
+    name        = "DigitalBoost-WordPress-EFS"  # Updated to reflect the firm's name
     vpc_id = var.vpc_id  # Associate the security group with the specified VPC
     description = "Security Group for EFS"  # Description of the security group
 
     tags = {
-      Name = "wordpress-EFS"  # Tag for identifying the EFS security group
+      Name = "DigitalBoost-WordPress-EFS"  # Updated to reflect the firm's name
     }
 }
 

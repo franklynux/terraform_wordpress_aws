@@ -38,7 +38,8 @@ resource "aws_launch_template" "wp-lanch_template" {
   tag_specifications {
     resource_type = "instance"  # Specify that tags are for EC2 instances
     tags = {
-      Name = "wordpress-server"  # Tag for identifying the WordPress server
+      Name = "DigitalBoost-WordPress-Server"  # Updated to reflect the firm's name
+      CreatedBy = "Terraform"  # Indicate that this resource was created using Terraform
     }
   }
 
@@ -81,8 +82,15 @@ resource "aws_iam_role_policy_attachment" "ssm_policy" {
 
 # Create an instance profile for the role
 resource "aws_iam_instance_profile" "ec2_profile" {
-  name = "wordpress_profile_ssm_access"  # Name of the instance profile
+  name = "wordpress_profile_ssm_access_${random_string.suffix.result}"  # Name of the instance profile generated with a random suffix
   role = aws_iam_role.wordpress_ec2_role.name  # Associate the IAM role with the instance profile
+}
+
+# Generate a random suffix for the instance profile
+resource "random_string" "suffix" {
+  length  = 6
+  special = false
+  upper   = false
 }
 
 # Configure Auto-scaling Group for launch template
@@ -102,7 +110,13 @@ resource "aws_autoscaling_group" "wp-asg" {
 
   tag {
     key                 = "Name"  # Tag key
-    value               = "wordpress-server"  # Tag value
+    value               = "DigitalBoost-WordPress-Server"  # Updated to reflect the firm's name
+    propagate_at_launch = true  # Propagate the tag to instances
+  }
+
+  tag {
+    key                 = "CreatedBy"  # Tag key
+    value               = "Terraform"  # Indicate that this resource was created using Terraform
     propagate_at_launch = true  # Propagate the tag to instances
   }
 }
@@ -167,7 +181,7 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu" {
 
 # Bastion Host Launch Template
 resource "aws_launch_template" "bastion-lanch_template" {
-  name = "WordPress-Bastion"  # Name of the bastion host launch template
+  name = "DigitalBoost-Bastion-Server"  # Updated to reflect the firm's name
   image_id      = data.aws_ami.ubuntu.id  # Use the retrieved Ubuntu AMI
   instance_type = "t2.micro"  # Instance type for the bastion host
   key_name      = var.key_name  # Key pair for SSH access
@@ -180,7 +194,8 @@ resource "aws_launch_template" "bastion-lanch_template" {
   tag_specifications {
     resource_type = "instance"  # Specify that tags are for EC2 instances
     tags = {
-      Name = "bastion-server"  # Tag for identifying the bastion host
+      Name = "DigitalBoost-Bastion-Server"  # Updated to reflect the firm's name
+      CreatedBy = "Terraform"  # Indicate that this resource was created using Terraform
     }
   }
   block_device_mappings {
@@ -211,7 +226,13 @@ resource "aws_autoscaling_group" "bastion-asg" {
 
   tag {
     key                 = "Name"  # Tag key
-    value               = "wordpress-bastion"  # Tag value
+    value               = "DigitalBoost-Bastion-Server"  # Updated to reflect the firm's name
+    propagate_at_launch = true  # Propagate the tag to instances
+  }
+
+  tag {
+    key                 = "CreatedBy"  # Tag key
+    value               = "Terraform"  # Indicate that this resource was created using Terraform
     propagate_at_launch = true  # Propagate the tag to instances
   }
 }

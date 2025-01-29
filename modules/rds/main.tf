@@ -29,6 +29,6 @@ resource "aws_db_subnet_group" "subnet-grp-rds" {
     subnet_ids = [var.private_subnet_3_id, var.private_subnet_4_id]  # Subnets for the RDS instance
 
     tags = {
-      Name = "Wordpress-RDS-Subnet-Group"  # Tag for identifying the subnet group
+      Name = "DigitalBoost-WordPress-RDS-Subnet-Group"  # Updated to reflect the firm's name
     }
 }

@@ -5,8 +5,9 @@ resource "aws_vpc" "main" {
     enable_dns_support = true      # Enable DNS support for the VPC
 
     tags = {
-        Name = "WordPress-vpc"     # Tag for identifying the VPC
+        Name = "DigitalBoost-WordPress-VPC"  # Updated to reflect the firm's name
     }
+
 }
 
 # Get list of Availability Zones in a Region
@@ -28,9 +29,10 @@ resource "aws_subnet" "public-subnets" {
     availability_zone = data.aws_availability_zones.AZs.names[count.index]  # Assign availability zone
 
     tags = {
-        Name = "Public-subnet-${count.index}"  # Tag for identifying the public subnets
+        Name = "DigitalBoost-Public-Subnet-${count.index}"  # Updated to reflect the firm's name
         Tier = "public"  # Tag to indicate the tier of the subnet
     }
+
 }
 
 # Private Subnet 1
@@ -42,9 +44,10 @@ resource "aws_subnet" "private-subnets" {
     availability_zone = element(data.aws_availability_zones.AZs.names, count.index % 2)  # Assign availability zone
 
     tags = {
-        Name = "private-subnet-${count.index}"  # Tag for identifying the private subnets
+        Name = "DigitalBoost-Private-Subnet-${count.index}"  # Updated to reflect the firm's name
         Tier = "private"  # Tag to indicate the tier of the subnet
     }
+
 }
 
 # Internet Gateway
@@ -78,8 +81,9 @@ resource "aws_route_table" "public-rt" {
     vpc_id = aws_vpc.main.id  # Associate the route table with the main VPC
 
     tags = {
-      Name = "public-route-table"  # Tag for identifying the public route table
+      Name = "DigitalBoost-Public-Route-Table"  # Updated to reflect the firm's name
     }
+
 }
 
 # Route Table for Private Subnets
@@ -87,16 +91,18 @@ resource "aws_route_table" "private-rt-1" {
     vpc_id = aws_vpc.main.id  # Associate the route table with the main VPC
 
     tags = {
-      Name = "private-route-table"  # Tag for identifying the first private route table
+      Name = "DigitalBoost-Private-Route-Table"  # Updated to reflect the firm's name
     }
+
 }
 
 resource "aws_route_table" "private-rt-2" {
     vpc_id = aws_vpc.main.id  # Associate the route table with the main VPC
 
     tags = {
-      Name = "private-route-table-2"  # Tag for identifying the second private route table
+      Name = "DigitalBoost-Private-Route-Table-2"  # Updated to reflect the firm's name
     }
+
 }
 
 # Route for Public Subnets

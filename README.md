@@ -1,3 +1,4 @@
+
 # Advanced WordPress Deployment on AWS Using Terraform
 
 ## **Table of Contents**
@@ -19,10 +20,11 @@
     - [**Diagram**](#diagram)
   - [**5. Deployment Steps**](#5-deployment-steps)
     - [**5.1 Setting Up Terraform**](#51-setting-up-terraform)
-    - [**5.2 Deployment Steps for Each Module**](#52-deployment-steps-for-each-module)
-    - [**5.3 Documentation for Terraform Scripts**](#53-documentation-for-terraform-scripts)
-    - [**5.4 Post Deployment Steps**](#54-post-deployment-steps)
-    - [**5.5 Terraform Commands for Setup and Deployment**](#55-terraform-commands-for-setup-and-deployment)
+    - [**5.2 Setting Up the Terraform Project Directory**](#52-setting-up-the-terraform-project-directory)
+    - [**5.3 Deployment Steps for Each Module**](#53-deployment-steps-for-each-module)
+    - [**5.4 Documentation for Terraform Scripts**](#54-documentation-for-terraform-scripts)
+    - [**5.5 Post Deployment Steps**](#55-post-deployment-steps)
+    - [**5.6 Terraform Commands for Setup and Deployment**](#56-terraform-commands-for-setup-and-deployment)
   - [**6. Monitoring and Logging**](#6-monitoring-and-logging)
   - [**7. Security Considerations**](#7-security-considerations)
   - [**8. Troubleshooting**](#8-troubleshooting)
@@ -140,7 +142,37 @@ Provide a detailed architecture diagram here. Ensure the diagram includes key re
    - Define reusable variables in `variables.tf`.
    - Provide meaningful outputs in `outputs.tf`.
 
-### **5.2 Deployment Steps for Each Module**
+### **5.2 Setting Up the Terraform Project Directory**
+
+1. **Create the Main Project Directory**:
+
+   ```bash
+   mkdir terraform_wordpress_aws
+   cd terraform_wordpress_aws
+   ```
+
+2. **Create Subdirectories for Modules**:
+
+   ```bash
+   mkdir -p modules/alb modules/asg modules/dynamodb modules/efs modules/networking modules/rds modules/s3 modules/vpc modules/wp-server
+   ```
+
+3. **Create Required Terraform Files**:
+   - Create the following files in the root directory:
+     - `backend.tf`
+     - `main.tf`
+     - `outputs.tf`
+     - `variables.tf`
+     - `terraform.tfvars`
+
+4. **Initialize Terraform**:
+   - Run the following command to initialize the Terraform working directory:
+
+     ```bash
+     terraform init
+     ```
+
+### **5.3 Deployment Steps for Each Module**
 
 - **ALB (Application Load Balancer)**:
   1. Ensure the ALB module is configured in `main.tf`.
@@ -179,17 +211,17 @@ Provide a detailed architecture diagram here. Ensure the diagram includes key re
   1. Configure the WP server module to deploy the WordPress application.
   2. Ensure that the server has access to the RDS instance and EFS.
 
-### **5.3 Documentation for Terraform Scripts**
+### **5.4 Documentation for Terraform Scripts**
 
 Add detailed comments to the Terraform scripts to explain the purpose of each resource, module, and configuration.
 
-### **5.4 Post Deployment Steps**
+### **5.5 Post Deployment Steps**
 
 - **Access WordPress**: Use the ALB endpoint to access WordPress.
 - **Complete Installation**: Follow the on-screen instructions to set up the WordPress admin account.
 - **Verify Database Connectivity**: Confirm that WordPress is connected to the RDS instance.
 
-### **5.5 Terraform Commands for Setup and Deployment**
+### **5.6 Terraform Commands for Setup and Deployment**
 
 1. **`terraform init`**: Initializes the Terraform working directory.
 2. **`terraform plan`**: Creates an execution plan for changes.
@@ -247,4 +279,3 @@ This project demonstrates a comprehensive approach to deploying WordPress on AWS
 ## **12. Acknowledgments**
 
 Special thanks to contributors and third-party module developers whose work made this project possible.
-

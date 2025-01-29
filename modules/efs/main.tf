@@ -4,14 +4,21 @@ resource "aws_kms_key" "wp_efs_kms" {
   deletion_window_in_days = 10  # Days before the key can be deleted
 
   tags = {
-    Name = "efs-kms-key"  # Tag for identifying the KMS key
+    Name = "DigitalBoost-EFS-KMS-Key"  # Updated to reflect the firm's name
   }
 }
 
 # Create an alias for the KMS key
 resource "aws_kms_alias" "wp_kms_alias" {
-    name          = "alias/wp-efs-kms"  # Alias name for the KMS key
+    name          = "alias/wp-efs-kms-${random_string.suffix.result}"  # Alias name for the KMS key generated with a random suffix
     target_key_id = aws_kms_key.wp_efs_kms.key_id  # Associate the alias with the KMS key
+}
+
+# Generate a random suffix for the KMS key alias
+resource "random_string" "suffix" {
+  length  = 6
+  special = false
+  upper   = false
 }
 
 # Create the EFS file system
@@ -27,7 +34,7 @@ resource "aws_efs_file_system" "wp-efs" {
   }
 
   tags = {
-    Name = "EFS-for-wordpress"  # Tag for identifying the EFS file system
+    Name = "DigitalBoost-EFS-for-WordPress"  # Updated to reflect the firm's name
   }
 }
 

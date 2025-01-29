@@ -102,7 +102,7 @@ if (\$conn->connect_error) {
     header("HTTP/1.1 500 Internal Server Error");
     echo "Database connection failed: " . \$conn->connect_error;
 } else {
-    echo "OK";
+    echo "Alright Sparky! Database Connection Successful!";
 }
 \$conn->close();
 ?>

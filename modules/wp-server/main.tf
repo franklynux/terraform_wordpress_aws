@@ -8,10 +8,9 @@ data "aws_ami" "ubuntu" {
     }
 
     filter {
-            name   = "virtualization-type"
-            values = ["hvm"]
-        }
-  
+        name   = "virtualization-type"
+        values = ["hvm"]
+    }
 }
 
 /*
@@ -31,8 +30,7 @@ resource "aws_instance" "wordpress" {
     })
 
     tags = {
-      name = "WordPress for DigitalBoost"
+      name = "DigitalBoost-WordPress"  # Updated to reflect the firm's name
     }
 }
 */
-

@@ -1,5 +1,5 @@
 resource "aws_lb" "wp-lb" {
-  name               = "wordpress-alb"
+  name               = "DigitalBoost-WordPress-ALB"  # Updated to reflect the firm's name
   internal           = false
   load_balancer_type = "application"
   security_groups    = [var.alb_security_group_id]
@@ -8,7 +8,6 @@ resource "aws_lb" "wp-lb" {
   enable_cross_zone_load_balancing = true
   idle_timeout                = 60
   subnets = var.public_subnet_ids
-  
 
   enable_deletion_protection = false
 
@@ -19,12 +18,12 @@ resource "aws_lb" "wp-lb" {
   }
 
   tags = {
-    Name = "wordpress"
+    Name = "DigitalBoost-WordPress-ALB"  # Updated to reflect the firm's name
   }
 }
 
 resource "aws_lb_target_group" "wp-tg" {
-  name        = "wordpress-lb-tg"
+  name        = "DigitalBoost-WordPress-TG"  # Updated to reflect the firm's name
   port        = 80
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
@@ -40,14 +39,13 @@ resource "aws_lb_target_group" "wp-tg" {
     healthy_threshold   = 2
     matcher             = "200-302"
   }
-   
+
   deregistration_delay = 300
 
   tags = {
-    Name = "wordpress"
+    Name = "DigitalBoost-WordPress-TG"  # Updated to reflect the firm's name
   }
 }
-
 
 resource "aws_lb_listener" "wp-lb-list" {
   load_balancer_arn = aws_lb.wp-lb.arn
@@ -60,14 +58,13 @@ resource "aws_lb_listener" "wp-lb-list" {
   }
 }
 
-
 # S3 bucket for load balancer access logs
 resource "aws_s3_bucket" "lb_logs" {
   bucket_prefix = "wordpress-lb-logs"
   force_destroy = true
 
   tags = {
-    Name = "wordpress-lb-logs"
+    Name = "DigitalBoost-WordPress-LB-Logs"  # Updated to reflect the firm's name
   }
 }
 
