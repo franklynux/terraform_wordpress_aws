@@ -14,7 +14,14 @@ resource "aws_db_instance" "wordpress_rds" {
   publicly_accessible    = false  # Do not make the RDS instance publicly accessible
   vpc_security_group_ids = var.vpc_security_group_ids  # Security groups for the RDS instance
   multi_az               = var.multi_az  # Enable Multi-AZ deployment for high availability
+
+  tags = {
+    Name = "DigitalBoost-WordPress-RDS"  
+  }
+  
 }
+
+
 
 # Store the RDS endpoint in Parameter Store
 resource "aws_ssm_parameter" "rds_endpoint" {
