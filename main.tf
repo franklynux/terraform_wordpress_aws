@@ -50,7 +50,6 @@ module "rds" {
 # ASG module
 module "asg" {
   source                 = "./modules/asg"  # Source path for the ASG module
-  name_prefix            = "wordpress-asg"   # Prefix for the ASG name
   vpc_security_group_ids = [module.networking.vpc_security_group_id]  # Passes VPC security group ID
   target_group_arn       = module.alb.target_group_arn  # Passes target group ARN from ALB
   private_subnet_1_id    = module.vpc.private_subnet_1_id  # Passes private subnet ID

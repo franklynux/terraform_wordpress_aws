@@ -1,9 +1,11 @@
+/*
 variable "name_prefix" {
     type = string
     description = "Name prefic of launch template"
     default = "wordpress-template"
   
 }
+*/
 
 variable "instance_type" {
     type = string

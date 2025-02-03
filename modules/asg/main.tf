@@ -21,7 +21,7 @@ data "aws_ami" "ubuntu" {
 
 # Create WordPress Launch Template
 resource "aws_launch_template" "wp-lanch_template" {
-  name_prefix   = var.name_prefix  # Prefix for the launch template name
+  name  = "DigitalBoost-WordPress-Server"  # define the name of the launch template
   image_id      = data.aws_ami.ubuntu.id  # Use the retrieved Ubuntu AMI
   instance_type = var.instance_type  # Instance type for the WordPress server
   key_name      = var.key_name  # Key pair for SSH access
@@ -181,7 +181,7 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu" {
 
 # Bastion Host Launch Template
 resource "aws_launch_template" "bastion-lanch_template" {
-  name = "DigitalBoost-Bastion-Server"  # Updated to reflect the firm's name
+  name = "DigitalBoost-Bastion-Server"  # Bastion host launch template name
   image_id      = data.aws_ami.ubuntu.id  # Use the retrieved Ubuntu AMI
   instance_type = "t2.micro"  # Instance type for the bastion host
   key_name      = var.key_name  # Key pair for SSH access
