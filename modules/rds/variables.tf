@@ -53,6 +53,13 @@ variable "password" {
     description = "Password for RDS"
 }
 
+variable "identifier" {
+    type = string
+    default = "digitalboost-wordpress-db"
+    description = "Identifier for RDS"
+  
+}
+
 variable "parameter_group_name" {
     type = string
     default = "default.mysql8.0"

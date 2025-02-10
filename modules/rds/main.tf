@@ -6,6 +6,7 @@ resource "aws_db_instance" "wordpress_rds" {
   engine_version         = var.engine_version  # Version of the database engine
   instance_class         = var.instance_class  # Instance class for the RDS instance
   db_name                = var.db_name  # Name of the database to create
+  identifier             = var.identifier  # Identifier for the database
   username               = var.username  # Master username for the database
   password               = var.password  # Master password for the database
   parameter_group_name   = var.parameter_group_name  # Parameter group for the database

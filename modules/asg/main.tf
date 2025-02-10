@@ -122,33 +122,32 @@ resource "aws_autoscaling_group" "wp-asg" {
 }
 
 # Auto-scaling policy to scale up on high CPU utilization
-resource "aws_autoscaling_policy" "scale_up" {
-  name                   = "scale-up"  # Name of the scaling policy
-  scaling_adjustment     = 1  # Number of instances to add
-  adjustment_type        = "ChangeInCapacity"  # Type of adjustment
-  cooldown               = 300  # Cooldown period
-  autoscaling_group_name = aws_autoscaling_group.wp-asg.name  # Associate with the ASG
+resource "aws_autoscaling_policy" "target_tracking" {
+  name                   = "target-tracking"
+  autoscaling_group_name = aws_autoscaling_group.wp-asg.name
+  policy_type            = "TargetTrackingScaling"
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value       = 50.0  # Maintain CPU at 50%
+    disable_scale_in   = false  # Ensure scale-in is enabled
+  }
 }
 
-# Auto-scaling policy to scale down on low CPU utilization
-resource "aws_autoscaling_policy" "scale_down" {
-  name                   = "scale-down"  # Name of the scaling policy
-  scaling_adjustment     = -1  # Number of instances to remove
-  adjustment_type        = "ChangeInCapacity"  # Type of adjustment
-  cooldown               = 300  # Cooldown period
-  autoscaling_group_name = aws_autoscaling_group.wp-asg.name  # Associate with the ASG
-}
 
 # Configure CloudWatch metric alarm and alarm action for high CPU Utilization
 resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   alarm_name          = "high-cpu-alarm"  # Name of the alarm
   comparison_operator = "GreaterThanThreshold"  # Condition for the alarm
-  evaluation_periods  = "2"  # Number of periods to evaluate
+  evaluation_periods  = 2  # Number of periods to evaluate
   metric_name         = "CPUUtilization"  # Metric to monitor
   namespace           = "AWS/EC2"  # Namespace for the metric
-  period              = "60"  # Period for the metric
+  period              = 60  # Period for the metric
   statistic           = "Average"  # Statistic to evaluate
-  threshold           = "80"  # Threshold for the alarm
+  threshold           = 50  # Threshold for the alarm
+  alarm_description  = "Scale up when CPU > 50% for 2 mins"
 
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.wp-asg.name  # Dimension for the alarm
@@ -163,12 +162,13 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
 resource "aws_cloudwatch_metric_alarm" "low_cpu" {
   alarm_name          = "low-cpu-alarm"  # Name of the alarm
   comparison_operator = "LessThanThreshold"  # Condition for the alarm
-  evaluation_periods  = "2"  # Number of periods to evaluate
+  evaluation_periods  = 2  # Number of periods to evaluate
   metric_name         = "CPUUtilization"  # Metric to monitor
   namespace           = "AWS/EC2"  # Namespace for the metric
-  period              = "60"  # Period for the metric
+  period              = 60  # Period for the metric
   statistic           = "Average"  # Statistic to evaluate
-  threshold           = "20"  # Threshold for the alarm
+  threshold           = 20  # Threshold for the alarm
+  alarm_description  = "Scale down when CPU < 20% for 2 mins"
 
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.wp-asg.name  # Dimension for the alarm
