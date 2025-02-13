@@ -121,22 +121,21 @@ resource "aws_autoscaling_group" "wp-asg" {
   }
 }
 
-# Auto-scaling policy to scale up on high CPU utilization
+# Auto-scaling policy to scale based on target tracking
 resource "aws_autoscaling_policy" "target_tracking" {
   name                   = "target-tracking"
   autoscaling_group_name = aws_autoscaling_group.wp-asg.name
   policy_type            = "TargetTrackingScaling"
-
   target_tracking_configuration {
+    target_value       = 50.0  # Target CPU utilization
     predefined_metric_specification {
-      predefined_metric_type = "ASGAverageCPUUtilization"
+      predefined_metric_type = "ASGAverageCPUUtilization"  # Use predefined metric for CPU utilization
     }
-    target_value       = 50.0  # Maintain CPU at 50%
-    disable_scale_in   = false  # Ensure scale-in is enabled
+
   }
 }
 
-
+/*
 # Configure CloudWatch metric alarm and alarm action for high CPU Utilization
 resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   alarm_name          = "high-cpu-alarm"  # Name of the alarm
@@ -154,7 +153,7 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   }
 
   alarm_actions = [
-    aws_autoscaling_policy.scale_up.arn  # Action to take when the alarm is triggered
+    aws_autoscaling_policy.target_tracking.arn  # Action to take when the alarm is triggered
   ]
 }
 
@@ -175,9 +174,10 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu" {
   }
 
   alarm_actions = [
-    aws_autoscaling_policy.scale_down.arn  # Action to take when the alarm is triggered
+    aws_autoscaling_policy.target_tracking.arn  # Action to take when the alarm is triggered
   ]
 }
+*/
 
 # Bastion Host Launch Template
 resource "aws_launch_template" "bastion-lanch_template" {

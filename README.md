@@ -25,7 +25,8 @@
     - [**5.4 Documentation for Terraform Scripts**](#54-documentation-for-terraform-scripts)
     - [**5.5 Verify AWS Resources**](#55-verify-aws-resources)
     - [**5.5.1 Post Deployment Steps**](#551-post-deployment-steps)
-    - [**5.6 Terraform Commands for Setup and Deployment**](#56-terraform-commands-for-setup-and-deployment)
+    - [**5.6 Simulating Traffic for Auto Scaling**](#56-simulating-traffic-for-auto-scaling)
+    - [**5.7 Terraform Commands for Setup and Deployment**](#57-terraform-commands-for-setup-and-deployment)
   - [**6. Monitoring and Logging**](#6-monitoring-and-logging)
   - [**7. Security Considerations**](#7-security-considerations)
   - [**8. Troubleshooting**](#8-troubleshooting)
@@ -427,32 +428,43 @@ After deploying the infrastructure using Terraform, you can verify that the foll
 
 ### **5.6 Simulating Traffic for Auto Scaling**
 
+**Note**: This installation is being performed on an Ubuntu t2.micro EC2 instance within the same VPC as the WordPress application.
+
 To trigger the auto-scaling policies and simulate traffic, follow these steps:
 
-1. **Install a Load Testing Tool**:
-   - For example, you can use Apache Benchmark (ab) or any other load testing tool.
+1. **Install Siege**:
+   - For Linux:
 
-      **For Windows (Using WSL):**
-      If you are on Windows, install Windows Subsystem for Linux (WSL) and use Ubuntu inside WSL:
-      ```bash
-      # Install Apache Benchmark (ab)
-      sudo apt-get update
-      sudo apt-get install apache2-utils -y
-      ```
-
-2. **Run the Load Testing Tool**:
-   - Execute the following command to simulate traffic to the ALB endpoint:
      ```bash
-     ab -n 1000 -c 100 http://<alb-dns-name>/
+     sudo apt-get update
+     sudo apt-get install siege -y
      ```
-   - This command sends 1000 requests to the ALB with a concurrency of 100.
+     ![siege install](./images/siege%20installed.png)
+     
+   - For Windows:
+     - Download the Siege installer from the [official Siege website](https://www.joedog.org/siege-home/).
+     - Follow the installation instructions provided.
+
+2. **Run Siege to Simulate Traffic**:
+   - Execute the following command to simulate traffic to the ALB endpoint:
+
+     ```bash
+     siege -c 100 -t 5m http://DigitalBoost-WordPress-ALB-2116307860.us-east-1.elb.amazonaws.com/
+     ```
+     ![siege run](./images/siege%20running.png)
+
+   - This command simulates 100 concurrent users for 5 minutes.
 
 3. **Monitor Auto Scaling Actions**:
    - Check the AWS Management Console under EC2 > Auto Scaling Groups to observe the scaling actions.
 
-4. **Placeholders for Screenshots**:
-   - ![Scale Up Screenshot](path/to/scale_up_screenshot.png)
-   - ![Scale Down Screenshot](path/to/scale_down_screenshot.png)
+    **ASG Scale down:**
+   - ![Scale Up Screenshot](./images/ASG%20high%20alarm%20scale%20up%20max.png)
+ 
+     ![Scale Up Screenshot](./images/ASG%20scale%20up%20success.png)
+    **ASG Scale down:**
+   - ![Scale Down Screenshot](./images/ASG%20scale%20down%20(init).png)
+   ![Scale Down Screenshot](./images/ASG%20scale%20down%20successful.png)
 
 ### **5.7 Terraform Commands for Setup and Deployment**
 
@@ -473,15 +485,17 @@ To trigger the auto-scaling policies and simulate traffic, follow these steps:
     ![terraform apply](./images/terraform%20apply%201.png)
     ![terraform apply](./images/terraform%20apply%202.png)
 
-1. **`terraform destroy`**: Destroys all resources managed by Terraform.
+1. **`terraform destroy`**: Destroys all resources managed by Terraform. Add the `auto-approve` flag to skip the confirmation prompt, this is optional.
 
-![terraform destroy]
+    ![terraform destroy](./images/terraform%20destroy.png)
+    ![terraform destroy complete](./images/terraform%20destroy%20complete.png)
 
 ---
 
 ## **6. Monitoring and Logging**
 
 - Use CloudWatch for metrics and logs.
+![CloudWatch metrics & logs](./images/CW%20metrics.png)
 - Set up alarms for resource utilization.
 - Enable access logs for ALB and S3.
 

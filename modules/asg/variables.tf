@@ -10,7 +10,7 @@ variable "name_prefix" {
 variable "instance_type" {
     type = string
     description = "Instance type"
-    default = "t2.small"
+    default = "t2.micro"
 }
 
 variable "key_name" {
