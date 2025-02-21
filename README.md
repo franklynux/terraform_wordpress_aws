@@ -36,7 +36,8 @@
   - [**9. Additional Enhancements**](#9-additional-enhancements)
   - [**10. Cleanup**](#10-cleanup)
   - [**11. Conclusion**](#11-conclusion)
-  - [**12. Acknowledgments**](#12-acknowledgments)
+  - [**12. Contributing**](#12-contributing)
+  - [Getting Help](#getting-help)
 
 ## **1. Project Overview**
 
@@ -65,12 +66,11 @@ Terraform is an open-source Infrastructure as Code (IaC) tool that allows you to
 
 ### Terraform State and Statefiles
 
-Terraform maintains a state file that acts as a source of truth for your infrastructure. This state file tracks the current state of your resources, allowing Terraform to manage and update them effectively. 
+Terraform maintains a state file that acts as a source of truth for your infrastructure. This state file tracks the current state of your resources, allowing Terraform to manage and update them effectively.
 
 When you run commands like `terraform apply`, `terraform plan`, or `terraform destroy`, Terraform uses the state file to determine what changes need to be made to your infrastructure. The state file is crucial for understanding the relationships between resources and ensuring that your infrastructure is consistent with your configuration files.
 
 By default, Terraform stores the state file locally, but it can also be configured to use remote backends (like S3 or Terraform Cloud) for better collaboration and state management.
-
 
 ## **Provider in Terraform**
 
@@ -105,7 +105,6 @@ Modules are containers for multiple resources that are used together. A module c
   }
   ```
 
-
 - **variables.tf**: This file defines the input variables for the Terraform configuration, allowing for parameterization and customization of the deployment.
 
   ```
@@ -122,7 +121,6 @@ Modules are containers for multiple resources that are used together. A module c
     value = aws_instance.example.id
     }
   ```
-
 
 ### **Terraform `.tfvars` Files**
 
@@ -598,6 +596,16 @@ This project demonstrates a comprehensive approach to deploying WordPress on AWS
 
 ---
 
-## **12. Acknowledgments**
+## **12. Contributing**
 
-Special thanks to contributors and third-party module developers whose work made this project possible.
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m 'Add YourFeature'`
+4. Push to the branch: `git push origin feature/YourFeature`
+5. Open a pull request
+
+---
+
+## Getting Help
+
+If you encounter any issues or have questions, please open an issue in the GitHub repository or contact me for assistance.
