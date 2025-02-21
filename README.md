@@ -9,6 +9,7 @@
     - [**Tech Stack**](#tech-stack)
     - [**Features**](#features)
   - [**2. Introduction to Terraform**](#2-introduction-to-terraform)
+  - [**Provider in Terraform**](#provider-in-terraform)
     - [**Terraform Modules**](#terraform-modules)
     - [**Variables and Outputs**](#variables-and-outputs)
     - [**Main Terraform Files**](#main-terraform-files)
@@ -61,6 +62,16 @@ This project demonstrates how to deploy a scalable, fault-tolerant WordPress app
 
 Terraform is an open-source Infrastructure as Code (IaC) tool that allows you to define and provision infrastructure using a declarative configuration language. It enables you to manage cloud resources efficiently and consistently, making it easier to automate infrastructure deployment and management.
 
+## **Provider in Terraform**
+
+A provider in Terraform is responsible for managing the lifeccycle of a resource. Providers are plugins that terraform uses to interact with different infrastructure platforms or services. They define a set of resources and data sources that terraform can manage.
+
+```
+provider "aws" {
+  region = "us-west-2"
+}
+```
+
 ### **Terraform Modules**
 
 Modules are containers for multiple resources that are used together. A module can be thought of as a package of Terraform configurations that can be reused across different projects. By organizing your configurations into modules, you can promote code reuse and maintainability.
@@ -72,9 +83,36 @@ Modules are containers for multiple resources that are used together. A module c
 
 ### **Main Terraform Files**
 
-- **main.tf**: This file contains the primary configuration for the infrastructure, defining the resources to be created and their relationships.
+- **main.tf**: This file contains the primary configuration for the infrastructure, defining the resources to be created and their relationships. An AWS provider and an EC2 instance are created in this example.
+
+  ```
+  provider "aws" {
+  region = "us-west-2"
+  }
+  resource "aws_instance" "example"{
+    ami  =  "ami-0c55b159cbfafe1f0"
+    instance_type = "t2.micro"
+  }
+  ```
+
+
 - **variables.tf**: This file defines the input variables for the Terraform configuration, allowing for parameterization and customization of the deployment.
+
+  ```
+  variable "example_var"{
+    type = string
+    default = "example_value"
+  }
+  ```
+
 - **outputs.tf**: This file specifies the outputs of the Terraform configuration, providing useful information after the infrastructure is created, such as resource IDs and endpoints.
+
+  ```
+  output "example_output" {
+    value = aws_instance.example.id
+    }
+  ```
+
 
 ### **Terraform `.tfvars` Files**
 
