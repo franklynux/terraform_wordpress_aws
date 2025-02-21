@@ -9,6 +9,7 @@
     - [**Tech Stack**](#tech-stack)
     - [**Features**](#features)
   - [**2. Introduction to Terraform**](#2-introduction-to-terraform)
+    - [Terraform State and Statefiles](#terraform-state-and-statefiles)
   - [**Provider in Terraform**](#provider-in-terraform)
     - [**Terraform Modules**](#terraform-modules)
     - [**Variables and Outputs**](#variables-and-outputs)
@@ -61,6 +62,15 @@ This project demonstrates how to deploy a scalable, fault-tolerant WordPress app
 ## **2. Introduction to Terraform**
 
 Terraform is an open-source Infrastructure as Code (IaC) tool that allows you to define and provision infrastructure using a declarative configuration language. It enables you to manage cloud resources efficiently and consistently, making it easier to automate infrastructure deployment and management.
+
+### Terraform State and Statefiles
+
+Terraform maintains a state file that acts as a source of truth for your infrastructure. This state file tracks the current state of your resources, allowing Terraform to manage and update them effectively. 
+
+When you run commands like `terraform apply`, `terraform plan`, or `terraform destroy`, Terraform uses the state file to determine what changes need to be made to your infrastructure. The state file is crucial for understanding the relationships between resources and ensuring that your infrastructure is consistent with your configuration files.
+
+By default, Terraform stores the state file locally, but it can also be configured to use remote backends (like S3 or Terraform Cloud) for better collaboration and state management.
+
 
 ## **Provider in Terraform**
 
