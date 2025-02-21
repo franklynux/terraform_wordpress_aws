@@ -11,6 +11,7 @@
   - [**2. Introduction to Terraform**](#2-introduction-to-terraform)
     - [**Terraform Modules**](#terraform-modules)
     - [**Variables and Outputs**](#variables-and-outputs)
+    - [**Main Terraform Files**](#main-terraform-files)
     - [**Terraform `.tfvars` Files**](#terraform-tfvars-files)
   - [**3. Prerequisites**](#3-prerequisites)
     - [**Environment Setup**](#environment-setup)
@@ -69,6 +70,12 @@ Modules are containers for multiple resources that are used together. A module c
 - **Variables**: Variables allow you to parameterize your Terraform configurations. They enable you to define values that can be reused throughout your configuration files, making it easier to manage and customize your infrastructure.
 - **Outputs**: Outputs are used to extract information from your Terraform configurations. They allow you to display values after the infrastructure has been created, making it easier to reference important information such as resource IDs or endpoints.
 
+### **Main Terraform Files**
+
+- **main.tf**: This file contains the primary configuration for the infrastructure, defining the resources to be created and their relationships.
+- **variables.tf**: This file defines the input variables for the Terraform configuration, allowing for parameterization and customization of the deployment.
+- **outputs.tf**: This file specifies the outputs of the Terraform configuration, providing useful information after the infrastructure is created, such as resource IDs and endpoints.
+
 ### **Terraform `.tfvars` Files**
 
 `.tfvars` files are used to define variable values in a separate file, allowing you to manage configurations more easily. By using `.tfvars` files, you can keep sensitive information and environment-specific settings out of your main configuration files.
@@ -91,6 +98,7 @@ Modules are containers for multiple resources that are used together. A module c
 - **Domain Name**: Required if using Route 53 for DNS.
 - **SSL Certificate**: Optional, for HTTPS setup.
 - **IAM Permissions**: Ensure sufficient IAM permissions to create resources.
+**Note:** No custom domain name was used for this project, so  no use for Route 53 and HTTPS configuraton.
 
 ---
 
@@ -98,7 +106,9 @@ Modules are containers for multiple resources that are used together. A module c
 
 ### **Diagram**
 
-Provide a detailed architecture diagram here. Ensure the diagram includes key resources like ALB, RDS, EC2, VPC, and EFS.
+![AWS Architecture](./images/Terraform%20Architecture%20Diagram.png)
+
+*Figure:* AWS Architectural diagram showing components.
 
 ---
 
@@ -439,8 +449,9 @@ To trigger the auto-scaling policies and simulate traffic, follow these steps:
      sudo apt-get update
      sudo apt-get install siege -y
      ```
+
      ![siege install](./images/siege%20installed.png)
-     
+
    - For Windows:
      - Download the Siege installer from the [official Siege website](https://www.joedog.org/siege-home/).
      - Follow the installation instructions provided.
@@ -449,8 +460,9 @@ To trigger the auto-scaling policies and simulate traffic, follow these steps:
    - Execute the following command to simulate traffic to the ALB endpoint:
 
      ```bash
-     siege -c 100 -t 5m http://DigitalBoost-WordPress-ALB-2116307860.us-east-1.elb.amazonaws.com/
+     siege -c 100 -t 5m http://<alb-dns-name>/
      ```
+
      ![siege run](./images/siege%20running.png)
 
    - This command simulates 100 concurrent users for 5 minutes.
@@ -460,7 +472,7 @@ To trigger the auto-scaling policies and simulate traffic, follow these steps:
 
     **ASG Scale down:**
    - ![Scale Up Screenshot](./images/ASG%20high%20alarm%20scale%20up%20max.png)
- 
+
      ![Scale Up Screenshot](./images/ASG%20scale%20up%20success.png)
     **ASG Scale down:**
    - ![Scale Down Screenshot](./images/ASG%20scale%20down%20(init).png)
