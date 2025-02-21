@@ -38,6 +38,7 @@
   - [**11. Conclusion**](#11-conclusion)
   - [**12. Contributing**](#12-contributing)
   - [Getting Help](#getting-help)
+  - [Author](#author)
 
 ## **1. Project Overview**
 
@@ -609,3 +610,9 @@ This project demonstrates a comprehensive approach to deploying WordPress on AWS
 ## Getting Help
 
 If you encounter any issues or have questions, please open an issue in the GitHub repository or contact me for assistance.
+
+---
+
+## Author
+
+[franklynux](https://github.com/franklynux)
