@@ -1,8 +1,8 @@
-# Advanced WordPress Deployment on AWS Using Terraform
+# Automated WordPress Deployment on AWS using Terraform
 
 ## **Table of Contents**
 
-- [Advanced WordPress Deployment on AWS Using Terraform](#advanced-wordpress-deployment-on-aws-using-terraform)
+- [Automated WordPress Deployment on AWS using Terraform](#automated-wordpress-deployment-on-aws-using-terraform)
   - [**Table of Contents**](#table-of-contents)
   - [**1. Project Overview**](#1-project-overview)
     - [**Introduction**](#introduction)
